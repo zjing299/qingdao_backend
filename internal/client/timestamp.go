@@ -20,9 +20,9 @@ type TimestampProvider interface {
 	Verify(context.Context, types.VerifyRequest) (*types.VerifyResult, error)
 }
 
-type TimestampClient struct{ config config.TimestampConf }
+type TimestampClient struct{ config config.UpstreamConf }
 
-func NewTimestampClient(c config.TimestampConf) *TimestampClient {
+func NewTimestampClient(c config.UpstreamConf) *TimestampClient {
 	return &TimestampClient{config: c}
 }
 

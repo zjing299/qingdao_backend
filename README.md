@@ -67,8 +67,14 @@ ts 是上级签发时间的 Unix 毫秒数。tsr 的目标格式为原始时间�
 
 ## 上级接口预留
 
-etc/config.yaml 的 Timestamp 包含 BaseURL、TokenPath、RSAPath、SMPath、VerifyPath、AppKey、AppSecret。
+etc/config.yaml 的 Upstream 包含 BaseURL、TokenPath、RSAPath、SMPath、VerifyPath、AppKey、AppSecret，以及超时和令牌刷新等参数。
 BaseURL 和凭据暂留空，四个路径默认分别为 /token、/rsa、/sm、/verify。
+当前统一在该 YAML 的 Upstream 节点维护配置；各字段用途已在配置文件中注明。
+AllowInsecureHTTP 默认 false，接入后应仅允许 HTTPS，仍需验证 HTTPS 证书。
+TokenTimeoutMs=3000 表示 token 请求超时 3 秒；RequestTimeoutMs=2000 表示打戳、验证请求分别超时 2 秒，不含 token 申请时间。
+RefreshBeforeSeconds=300 表示 token 到期前 5 分钟需要刷新，后续实现应适配上级有效期，避免短期 token 持续刷新。
+MaxResponseBytes=4194304 表示上级响应体最多读取 4 MiB，与本地请求大小限制无关。
+这些参数目前只完成配置定义；HTTP 调用、HTTPS 限制、超时、token 缓存刷新和响应大小限制将在上级客户端接入时实现。
 internal/client/timestamp.go 集中预留 Token、RSA、SM、Verify 方法；Token 仅供后端内部使用，未提供公开令牌接口。
 
 当前已实现本地路由、参数校验、逻辑分层和错误响应；上级 HTTP 调用尚未实现。

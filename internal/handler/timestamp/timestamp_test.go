@@ -70,11 +70,11 @@ func TestApplyRejectsInvalidRequestsBeforeCallingUpstream(t *testing.T) {
 
 func TestUnconfiguredAndPendingUpstreamAreUnavailable(t *testing.T) {
 	for _, tc := range []struct {
-		config config.TimestampConf
+		config config.UpstreamConf
 		code   string
 	}{
-		{config.TimestampConf{}, "TIMESTAMP_NOT_CONFIGURED"},
-		{config.TimestampConf{BaseURL: "https://unused.invalid"}, "TIMESTAMP_INTEGRATION_PENDING"},
+		{config.UpstreamConf{}, "TIMESTAMP_NOT_CONFIGURED"},
+		{config.UpstreamConf{BaseURL: "https://unused.invalid"}, "TIMESTAMP_INTEGRATION_PENDING"},
 	} {
 		service := logic.New(client.NewTimestampClient(tc.config))
 		w := post(Apply(service, "SHA256"), `{"rid":"`+strings.Repeat("a", 64)+`"}`)

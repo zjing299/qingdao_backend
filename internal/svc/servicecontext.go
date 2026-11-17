@@ -12,6 +12,6 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) (*ServiceContext, error) {
-	return &ServiceContext{Config: c, Timestamp: timestamp.New(client.NewTimestampClient(c.Timestamp))}, nil
+	return &ServiceContext{Config: c, Timestamp: timestamp.New(client.NewTimestampClient(c.Upstream))}, nil
 }
 func (s *ServiceContext) Close() error { return nil }

@@ -14,11 +14,28 @@ Service:
 
 # 上级服务地址留空。请求协议、认证和响应映射待取得上级文档后对接。
 # 仅填入地址不会启用调用；未对接时接口返回 HTTP 503。
-Timestamp:
-  BaseURL: ""
-  TokenPath: /token
-  RSAPath: /rsa
-  SMPath: /sm
-  VerifyPath: /verify
+# 当前文件通过 go:embed 编入程序；填写真实密钥后打包也会包含密钥。
+Upstream:
+  # 上级服务基础地址，不含下面的接口路径。
+  BaseURL: "http://10.25.120.40:9988/v1"
+  # false 表示仅允许 HTTPS；不代表跳过 HTTPS 证书验证。
+  AllowInsecureHTTP: false
+  # 上级分配的应用标识和密钥，暂留空。
   AppKey: ""
   AppSecret: ""
+  # 申请或刷新 token 的单次请求超时，单位毫秒。
+  TokenTimeoutMs: 3000
+  # 打戳或验证的单次请求超时，单位毫秒；不含申请 token 的时间。
+  RequestTimeoutMs: 2000
+  # 在 token 到期前多少秒视为需要刷新；须结合上级有效期实现。
+  RefreshBeforeSeconds: 300
+  # 上级单次响应体的读取上限，4194304 字节 = 4 MiB。
+  MaxResponseBytes: 4194304
+  # 后端内部申请访问令牌。
+  TokenPath: /token
+  # SHA-256 摘要打戳。
+  RSAPath: /rsa
+  # SM3 摘要打戳。
+  SMPath: /sm
+  # 时间戳凭证验证。
+  VerifyPath: /verify
