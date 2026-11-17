@@ -1,0 +1,24 @@
+Name: qingdao_backend
+Host: 127.0.0.1
+Port: 3010
+Mode: dev
+LogConf:
+  ServiceName: qingdao_backend
+  Mode: console
+  Encoding: plain
+  Level: info
+Service:
+  TimeZone: Asia/Shanghai
+  Active: ""
+  Profiles: {}
+
+# 上级服务地址留空。请求协议、认证和响应映射待取得上级文档后对接。
+# 仅填入地址不会启用调用；未对接时接口返回 HTTP 503。
+Timestamp:
+  BaseURL: ""
+  TokenPath: /token
+  RSAPath: /rsa
+  SMPath: /sm
+  VerifyPath: /verify
+  AppKey: ""
+  AppSecret: ""

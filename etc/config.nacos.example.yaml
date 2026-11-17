@@ -1,0 +1,15 @@
+# Copy the profile below into config.yaml and set Service.Active to dev.
+# Create both Data IDs in Nacos before enabling the profile.
+Service:
+  TimeZone: Asia/Shanghai
+  Active: dev
+  Profiles:
+    dev:
+      Host: 127.0.0.1
+      Port: 8848
+      Namespace: ""
+      ServiceName: qingdao_backend
+      Weight: 1
+      Group: DEFAULT_GROUP
+      BaseDataId: application-dev.yml
+      DataId: qingdao_backend-dev.yml
